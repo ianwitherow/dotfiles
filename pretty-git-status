@@ -1,0 +1,22 @@
+#"/mnt/c/Program Files/Git/bin/git.exe" status \
+git status \
+| sed -r "s/^(.*On branch )(.*$)/\r\n\1$(printf "\033[4m\033[1m\033[35m")\2$(printf "\033[0m")/"  \
+| sed -r "s/^(.*Your branch is )(.*)( with  \
+| of )('.*')\.?( by )?(.*commit[s]?.*)?.*\./\1$(printf "\033[4m\033[1m\033[35m")\2$(printf "\033[0m")\3$(printf "\033[4m\033[1m\033[35m")\4$(printf "\033[0m")\5$(printf "\033[4m\033[1m\033[35m")\6$(printf "\033[0m").\r\n/"  \
+| sed -r "s/^(.*Your branch is.*up-to-date.*)/$(printf "\033[1m\033[32m✔")$(printf "\033[0m") \1/"  \
+| sed -r "s/(^.*Changes to be committed:.*$)/$(printf "\033[4m")\r\n\1$(printf "\033[0m")/"  \
+| sed -r "s/(^.*Changes not staged for commit:.*$)/$(printf "\033[4m")\1$(printf "\033[0m")/"  \
+| sed -r "s/(^.*Untracked files:.*$)/$(printf "\033[4m")\1$(printf "\033[0m")/"  \
+| sed -r "s/(^.*deleted:.*$)/$(printf "\033[31m")x\1$(printf "\033[0m")/"  \
+| sed -r "s/^.*(deleted:.*$)/$(printf "\033[31m")x       \1$(printf "\033[0m")/"  \
+| sed -r "s/(^.*)(modified:.*$)/$(printf "\033[33m")*\1$(printf "\033[33m")\2$(printf "\033[0m")/"  \
+| sed -r "s/(^.*added:.*$)/$(printf "\033[32m")+\1$(printf "\033[0m")/"  \
+| sed -r "s/(^.*new file:.*$)/$(printf "\033[32m")+\1$(printf "\033[0m")/"  \
+| sed "/.*to include in what will be committed/d"  \
+| sed "/.*use.*git add.*to update what will/d"  \
+| sed "/.*use.*git checkout.*to discard changes in working directory/d"  \
+| sed "/.*use.*git push.*to publish your local commits.*/d"  \
+| sed -r "$ s/(.*)/\1\n______________________________________________________________________/g"
+
+
+

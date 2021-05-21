@@ -1,0 +1,51 @@
+[core]
+	fscache = true
+	preloadindex = true
+	trustctime = false
+	editor = vim
+	autocrlf = false
+	whitespace = cr-at-eol
+[push]
+	default = simple
+[color]
+	ui = true
+
+[user]
+	name = Ian Witherow
+	email = ianwitherow@gmail.com
+[branch "master"]
+	remote = origin
+[alias]
+	co = checkout
+	br = branch
+	#st = status
+	sshow = "!f() { git stash show stash^{/$*} -p; }; f"
+	sapply = "!f() { git stash apply stash^{/$*}; }; f"
+	spop = "!f() { git stash pop stash^{/$*}; }; f"
+	spopfirst = stash pop stash@{0}
+	live = !git push && git co master && git merge --no-ff develop && git push && git co develop
+	d = diff -w
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[merge]
+	ff = no
+[gc]
+	auto = 256
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+[credential]
+	helper = store
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+
