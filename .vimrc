@@ -1,4 +1,3 @@
-set t_u7=
 set number                     " Line numbers
 set linebreak                  " Break line without break word
 set linespace=2
@@ -21,12 +20,16 @@ set noshowmatch
 set hidden                     " Allow switching buffers even if it's not saved yet
 set rnu                        " relative line numbers
 set nohlsearch                 " Don't highlight search queries
+set path+=**                   " Search down into subfolders
+set wildmenu                   " Display all matching files when we tab complete
 
-set guifont=Monaco\ for\ Powerline:h11:cANSI
+"set guifont=Monaco\ for\ Powerline:h11:cANSI
+set guifont=Mononoki:h12
 "set guifont=Fira\ Mono\ for\ Powerline:h11:cANSI
 "set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete:h13
 "set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete\ Mono\ Windows\ Compatible:h13
 "set guifont=SauceCodePro\ Nerd\ Font:h13
+set guifont=CascadiaCode\ Nerd\ Font:h12:cANSI
 
 
 let mapleader=','
@@ -34,85 +37,77 @@ let mapleader=','
 "Syntax highlighting
 syntax on
 
-"Vundle stuff
+" vim-plug stuff
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-set rtp+=/ProgramData/chocolatey/lib/fzf
-call vundle#begin()
+set rtp+=$HOME/.vim
+call plug#begin('c:\Users\dave\.vim\plugged')
 
-Plugin 'gmarik/Vundle.vim'
+Plug 'ianwitherow/vim-dracula'          " colorscheme
+Plug 'bluz71/vim-moonfly-colors'        " colorscheme
+Plug 'rakr/vim-one'                     " colorscheme
+Plug 'morhetz/gruvbox'                  " colorscheme
+Plug 'mhartington/oceanic-next'         " colorscheme
+Plug 'sickill/vim-monokai'              " colorscheme
+Plug 'aonemd/kuroi.vim'                 " colorscheme
+Plug 'ianwitherow/onedark.vim'          " colorscheme
 
-Plugin 'ianwitherow/vim-dracula'          " colorscheme
-Plugin 'bluz71/vim-moonfly-colors'        " colorscheme
-Plugin 'rakr/vim-one'                     " colorscheme
-Plugin 'morhetz/gruvbox'                  " colorscheme
-Plugin 'mhartington/oceanic-next'         " colorscheme
-Plugin 'sickill/vim-monokai'              " colorscheme
-Plugin 'aonemd/kuroi.vim'                 " colorscheme
-Plugin 'chriskempson/base16-vim'          " colorscheme
+Plug 'kien/ctrlp.vim'
+Plug 'chrisbra/csv.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'cohama/lexima.vim'
+Plug 'docunext/closetag.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'mjbrownie/swapit'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'bkad/CamelCaseMotion'             " use ,<motion> to move in camelcase
+Plug 'gregsexton/MatchTag'
+Plug 'scrooloose/nerdtree'              " File browsing
+Plug 'ianwitherow/vim-vmath'            " Lets you do <leader>+ to math some numbers
+Plug 'mattn/emmet-vim'                  " New zen-coding
+Plug 'godlygeek/tabular'
+Plug 'tpope/vim-markdown'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'groenewege/vim-less'
+Plug 'mbbill/undotree'
+Plug 'AndrewRadev/sideways.vim'
+Plug 'othree/yajs.vim'                  " javascript, es6/react stuff
+Plug 'mxw/vim-jsx'                      " React syntax
+Plug 'othree/es.next.syntax.vim'        " es7 syntax
+Plug 'tpope/vim-jdaddy'                 " JSON text object stuff
+Plug 'tommcdo/vim-lion'                 " align code with gl<motion><letter>, like glip=
+Plug 'PProvost/vim-ps1'                 " Powershell support
 
-Plugin 'kien/ctrlp.vim.git'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'chrisbra/csv.vim.git'
-Plugin 'jiangmiao/auto-pairs.git'
-Plugin 'cohama/lexima.vim'
-Plugin 'docunext/closetag.vim.git'
-Plugin 'scrooloose/nerdcommenter.git'
-Plugin 'mjbrownie/swapit.git'
-Plugin 'bling/vim-airline.git'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-repeat.git'
-Plugin 'tpope/vim-surround.git'
-Plugin 'bkad/CamelCaseMotion.git'         " use ,<motion> to move in camelcase
-Bundle 'gregsexton/MatchTag'
-Plugin 'scrooloose/nerdtree.git'          " File browsing
-"Plugin 'nixon/vim-vmath'            " Lets you do <leader>+ to math some numbers
-Plugin 'ianwitherow/vim-vmath'            " Lets you do <leader>+ to math some numbers
-Plugin 'mattn/emmet-vim.git'              " New zen-coding
-Plugin 'godlygeek/tabular.git'
-Bundle 'tpope/vim-markdown'
-Bundle 'hail2u/vim-css3-syntax'
-Plugin 'dhruvasagar/vim-table-mode'
-Plugin 'groenewege/vim-less'
-Plugin 'mbbill/undotree'
-Plugin 'AndrewRadev/sideways.vim'
-Plugin 'othree/yajs.vim'                  " javascript, es6/react stuff
-Plugin 'mxw/vim-jsx'                      " React syntax
-Plugin 'othree/es.next.syntax.vim'        " es7 syntax
-Plugin 'tpope/vim-jdaddy.git'             " JSON text object stuff
-Plugin 'tommcdo/vim-lion'                 " align code with gl<motion><letter>, like glip=
-Plugin 'PProvost/vim-ps1'                 " Powershell support
+Plug 'kkoenig/wimproved.vim'            " Fixes gvim issues like window bar color
+Plug 'yegappan/mru'                     " Plugin for recently edited files
 
-Plugin 'kkoenig/wimproved.vim'            " Fixes gvim issues like window bar color
-Plugin 'yegappan/mru'                     " Plugin for recently edited files
+Plug 'MarcWeber/vim-addon-mw-utils'     " Dependency for snipmate
+Plug 'tomtom/tlib_vim'                  " Dependency for snipmate
+Plug 'garbas/vim-snipmate'              " Snippets
 
-Plugin 'MarcWeber/vim-addon-mw-utils'     " Dependency for snipmate
-Plugin 'tomtom/tlib_vim'                  " Dependency for snipmate
-Plugin 'garbas/vim-snipmate'              " Snippets
+Plug 'honza/vim-snippets'
+Plug 'christianrondeau/vim-base64'
 
-Plugin 'honza/vim-snippets'
-Plugin 'christianrondeau/vim-base64'
-"Plugin 'elzr/vim-json'
-Plugin 'leshill/vim-json'
+Plug 'mhinz/vim-startify'               " Start page for vim
+Plug 'azzoam/FixGVimBorder'
 
-Plugin 'mhinz/vim-startify' " Start page for vim
+                                        " Use gr{motion} to replace with text in register. For a specific register, use "xgr{motion}
+Plug 'vim-scripts/ReplaceWithRegister' 
 
-call vundle#end()
+Plug 'vim-utils/vim-space'              " Whitespace text object
+
+call plug#end()
 
 "colorscheme gruvbox
 "colorscheme OceanicNext
 "colorscheme monokai
-colorscheme moonfly
+"colorscheme moonfly
+colorscheme onedark
 
 filetype plugin indent on
-
-
-"" Use pathogen to load plugins from bundle directory
-"filetype off
-"call pathogen#incubate()
-"call pathogen#helptags()
-"filetype plugin indent on
 
 
 "Auto commands
@@ -122,7 +117,7 @@ au BufNewFile,BufRead *.aspx,*.ascx,*.master,*.cshtml set filetype=html
 au BufNewFile,BufRead *.js,*.jsx set fileformat=unix
 
 "Start in full screen
-au GUIEnter * simalt ~x
+"au GUIEnter * simalt ~x
 "au GUIEnter * silent! WToggleClean
 
 
@@ -180,12 +175,8 @@ nmap <S-Enter> O<Esc>
 nmap j gj
 nmap k gk
 
-" Left and right arrows move between buffers
-nmap <left> :bp<cr>
-nmap <right> :bn<cr>
-
-"Make empty lines ACTUALLY empty (removes lines with just whitespace)
-nmap <leader>dws :%s/^\s*$//g<CR>:noh<cr>``
+"Make empty lines ACTUALLY empty (removes lines with just whitespace, and trailing whitespace)
+nmap <leader>dws ma:%s/^\s*$//g<CR>:%s/\s\+$//e<CR>`a
 
 "Delete empty lines
 nmap <leader>dbl :g/^\s*$/d<cr>``
@@ -204,6 +195,7 @@ map <leader>rc :edit $MYVIMRC<CR>
 
 " Switch CWD to the directory of the open buffer
 nnoremap <silent> <leader>cd :cd %:p:h<CR>:NERDTreeCWD<CR>:NERDTreeClose<CR>
+nnoremap <silent> <leader>nf :NERDTreeFind<CR>
 
 "Open current file location in windows explorer
 map <leader>ex :silent !explorer.exe /select, "%:p"<cr>
@@ -269,6 +261,7 @@ nnoremap <Leader>fj :%!python -m json.tool<CR>:set ft=javascript<CR>
 nnoremap <Leader>fjs :call JsBeautify()<cr>
 
 nnoremap <leader>fx :set filetype=xml<cr>:%s/</\r</g<CR>:%s/>/>\r/g<CR>:g/^\s*$/d<CR>gg=G
+nnoremap <leader>fX :set filetype=xml<cr>:%s/^\s\+//e<CR>ggVGgJ0
 
 "Fix js comments. Turns //This  into  // This
 "Make sure a colon isn't before the slashes since that's probably a url
@@ -300,11 +293,11 @@ xmap ia <Plug>SidewaysArgumentTextobjI
 nnoremap <F5> :UndotreeToggle<cr>
 
 "Markdown preview
-nmap <leader>md :%!c:\users\ian.witherow\.vim\Markdown.pl --html4tags <cr>
+nmap <leader>md :%!c:\users\ianwi\.vim\Markdown.pl --html4tags <cr>
 
 " Use tab and shift-tab to cycle through windows.
-nnoremap <Tab> <C-W>w
-nnoremap <S-Tab> <C-W>W
+"nnoremap <Tab> <C-W>w
+"nnoremap <S-Tab> <C-W>W
 "
 " Use | and _ to split windows (while preserving original behaviour of [count]bar and [count]_).
 nnoremap <expr><silent> <Bar> v:count == 0 ? "<C-W>v<C-W><Right>" : ":<C-U>normal! 0".v:count."<Bar><CR>"
@@ -338,17 +331,13 @@ let g:jsx_ext_required = 0
 
 
 "Persist undo
-let vimDir = '$HOME/.vim'
-let &runtimepath.=','.vimDir
-if has('persistent_undo')
-	let myUndoDir = expand(vimDir . '/undodir')
-	" Create dirs
-	call system('mkdir ' . vimDir)
-	call system('mkdir ' . myUndoDir)
-	let &undodir = myUndoDir
-	set undofile
-	set undolevels=5000
+let undo_dir = $TEMP."\\vimundo"
+if !isdirectory(undo_dir)
+	silent execute "!mkdir ".undo_dir
 endif
+set undodir=$TEMP\vimundo "not sure how to use the variable I made here
+set undofile
+set undolevels=100000
 
 
 runtime macros/matchit.vim
@@ -357,26 +346,23 @@ runtime macros/matchit.vim
 " start page config
 let g:startify_bookmarks = [
 		\ { 'c': '~/.vimrc' },
-		\ { 'r': '~/OneDrive - SOURCE OFFICE & TECHNOLOGY/Projects/Web/Source/Source.Web/apps/react' },
+		\ { 'r': '~/OneDrive - Source/Projects/Web/Source/Source.Web/apps/react' },
 		\ ]
 
 let g:startify_change_to_dir = 1
 let g:startify_disable_at_vimenter = 1
 
 
-"Ctrl-P and FZF stuff
+"Ctrl-P stuff
 "Ctrl+B opens CtrlP Buffer
-nnoremap <silent> <c-f> :Files %:p:h<CR>
-nnoremap <silent> <c-b> :Buffers<CR>
-" Files but for the current directory
-nnoremap <leader>f :Files<CR>
+nnoremap <silent> <c-b> :CtrlPBuffer<CR>
+
 "<leader>mru opens Startify
 nnoremap <silent> <leader>mru :Startify<CR>
 let g:ctrlp_working_path_mode = 'c'
-let $FZF_DEFAULT_COMMAND = 'ag --nocolor --ignore node_modules --ignore obj --ignore svgs --ignore bin --ignore packages --ignore bower_components --ignore Content --ignore Scripts -g ""'
 
 " cd into Source project directory
-nnoremap <silent> <leader>src :cd c:\Users\ian.witherow\Dropbox (Source)\Projects\Web\Source<CR>:NERDTreeCWD<CR>:NERDTreeClose<CR>:Startify<CR>
+"nnoremap <silent> <leader>src :cd c:\Users\ianwi\OneDrive - Source\Projects\Web\Source<CR>:NERDTreeCWD<CR>:NERDTreeClose<CR>:Startify<CR>
 
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
@@ -408,16 +394,20 @@ map <F2> :NERDTreeToggle<CR>
 "Make it so ? doesn't open help
 let NERDTreeMapHelp='<F7>'
 
+set tags=tags;/
+
 if !has("gui_running")
     set term=xterm
     set t_Co=256
     let &t_AB="\e[48;5;%dm"
     let &t_AF="\e[38;5;%dm"
-    set background=dark
-    set termguicolors
-    let base16colorspace=256
-    "colorscheme base16-default-dark
+    colorscheme kuroi
+else
+	set lines=50
+	set columns=150
 endif
+
+call fixGVimBorder#auto()
 
 
 function! FixBrackets()
@@ -437,8 +427,8 @@ endfunction
 
 "Format document with HTML then open it in chrome
 function! ToHtml()
-	"silent :colorscheme solarized
-	"silent :set background=light
+	#silent :colorscheme solarized
+	#silent :set background=light
 	:TOhtml
 	:w
 	silent :!chrome %
@@ -464,7 +454,7 @@ function! Sql()
 	call inputrestore() 
 	if createTable == "y"
 		call inputsave()
-		let tableField = input('Field name: ')
+		let tableField = input('Field names (comma separated): ')
 		call inputrestore() 
 	endif
 
@@ -472,6 +462,8 @@ function! Sql()
 
 	"Remove blank lines
 	silent :execute ":g/^$/d"
+	" Replace single quotes with two single quotes
+	silent! :execute ":%s/'/''/ge"
 
 	:silent %s/^/,('/ge
 	:silent %s/\t/', '/ge
@@ -500,7 +492,12 @@ function! Sql()
 
 	if tableField != ""
 		:execute "normal! gg"
-		let sql = "create table " . tableName . " (". tableField ." varchar(500))"
+		let sql = "create table " . tableName . " ("
+		for s:item in split(tableField, ',')
+			let sql .= s:item . " varchar(500), "
+		endfor
+		let sql .= ")"
+		let sql = substitute(sql, ", )", ")", "")
 		:execute "normal! O"
 		call setline('.', sql)
 	endif
