@@ -33,12 +33,12 @@ if ! command -v curl >/dev/null; then
 	# check if running on macOS
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 		echo "Installing curl on macOS using Homebrew..."
-		brew install curl
+		brew install -y curl
 
 		# check if running on Linux
 	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 		echo "Installing curl on Linux using apt-get..."
-		sudo apt-get install curl
+		sudo apt-get -y install curl
 
 		echo "curl installation complete."
 	fi
@@ -53,12 +53,12 @@ if ! command -v git &> /dev/null; then
 	# check if running on macOS
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 		echo "Git not found. Installing Git on macOS using Homebrew..."
-		brew install git
+		brew install -y git
 		echo "Git installation complete."
 		# check if running on Linux
 	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 		echo "Git not found. Installing Git on Linux using apt-get..."
-		sudo apt-get install git
+		sudo apt-get -y install git
 		echo "Git installation complete."
 	fi
 else
@@ -81,12 +81,12 @@ if ! command -v zsh &> /dev/null; then
 	# check if running on macOS
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 		echo "Zsh not found. Installing Zsh on macOS using Homebrew..."
-		brew install zsh
+		brew install -y zsh
 		zsh_installed=true
 		# check if running on Linux
 	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 		echo "Zsh not found. Installing Zsh on Linux using apt-get..."
-		sudo apt-get install zsh
+		sudo apt-get -y install zsh
 		zsh_installed=true
 	fi
 else
@@ -123,12 +123,12 @@ if ! command -v nvim >/dev/null; then
 	# check if running on macOS
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 		echo "Installing Neovim on macOS using Homebrew..."
-		brew install neovim
+		brew install -y neovim
 
 		# check if running on Linux
 	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 		echo "Installing Neovim on Linux using apt-get..."
-		sudo apt-get install neovim
+		sudo apt-get -y install neovim
 
 		echo "Neovim installation complete."
 	fi
