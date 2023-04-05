@@ -19,7 +19,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	if [[ $(command -v brew) == "" ]]; then
 		echo ""
 		echo ""
-		echo "\e[1;32mFailed to install Homebrew. Try running this script again as sudo (sudo !!)\e[0m"
+		echo "\e[1;31mFailed to install Homebrew. Try running this script again as sudo (sudo \!\!)\e[0m"
 		exit 1
 	fi
 fi
@@ -142,7 +142,7 @@ find ~/dotfiles -mindepth 1 -maxdepth 1 ! \( -name 'install.sh' -o -name '.git' 
 echo "Copy complete."
 
 
-echo "\e[1;32mDone!\e[0m"
+echo "\e[1;32mDone\!\e[0m"
 
 # Tell user to run zsh if necessary
 if command -v zsh >/dev/null 2>&1; then
