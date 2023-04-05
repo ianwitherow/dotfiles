@@ -1,6 +1,10 @@
+"\e[A": history-search-backward            # arrow up
+"\e[B": history-search-forward             # arrow down
 set completion-ignore-case on
 
 
+
+set completion-ignore-case On 
 #TAB: menu-complete 
 Tab: complete 
 #set editing-mode vi 
@@ -16,4 +20,3 @@ Tab: complete
 #set keymap vi-command 
 #"\C-o": operate-and-get-next 
  
-set bell-style none

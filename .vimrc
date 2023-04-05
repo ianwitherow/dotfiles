@@ -20,16 +20,18 @@ set noshowmatch
 set hidden                     " Allow switching buffers even if it's not saved yet
 set rnu                        " relative line numbers
 set nohlsearch                 " Don't highlight search queries
-set path+=**                   " Search down into subfolders
-set wildmenu                   " Display all matching files when we tab complete
 
+"set guifont=IBM\ Plex\ Mono:h12:cANSI
 "set guifont=Monaco\ for\ Powerline:h11:cANSI
-set guifont=Mononoki:h12
+"set guifont=Cascadia\ Code:h11:cANSI
+"set guifont=Source\ Code\ Pro:h11:cANSI
+set guifont=CascadiaCode\ Nerd\ Font:h12:cANSI
+
+
 "set guifont=Fira\ Mono\ for\ Powerline:h11:cANSI
 "set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete:h13
 "set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete\ Mono\ Windows\ Compatible:h13
 "set guifont=SauceCodePro\ Nerd\ Font:h13
-set guifont=CascadiaCode\ Nerd\ Font:h12:cANSI
 
 
 let mapleader=','
@@ -37,11 +39,10 @@ let mapleader=','
 "Syntax highlighting
 syntax on
 
-" vim-plug stuff
+                                        " vim-plug stuff
 filetype off
 set rtp+=$HOME/.vim
-call plug#begin('c:\Users\dave\.vim\plugged')
-
+call plug#begin()
 Plug 'ianwitherow/vim-dracula'          " colorscheme
 Plug 'bluz71/vim-moonfly-colors'        " colorscheme
 Plug 'rakr/vim-one'                     " colorscheme
@@ -49,9 +50,14 @@ Plug 'morhetz/gruvbox'                  " colorscheme
 Plug 'mhartington/oceanic-next'         " colorscheme
 Plug 'sickill/vim-monokai'              " colorscheme
 Plug 'aonemd/kuroi.vim'                 " colorscheme
-Plug 'ianwitherow/onedark.vim'          " colorscheme
+Plug 'chuling/ci_dark'                  " colorscheme
+Plug 'sjl/badwolf'                      " colorscheme
 
+Plug 'luochen1990/rainbow'              " makes nested parentheses different colors
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'kien/ctrlp.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'chrisbra/csv.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'cohama/lexima.vim'
@@ -62,9 +68,10 @@ Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
 Plug 'bkad/CamelCaseMotion'             " use ,<motion> to move in camelcase
 Plug 'gregsexton/MatchTag'
-Plug 'scrooloose/nerdtree'              " File browsing
+"Plug 'scrooloose/nerdtree'             " File browsing
 Plug 'ianwitherow/vim-vmath'            " Lets you do <leader>+ to math some numbers
 Plug 'mattn/emmet-vim'                  " New zen-coding
 Plug 'godlygeek/tabular'
@@ -80,24 +87,19 @@ Plug 'othree/es.next.syntax.vim'        " es7 syntax
 Plug 'tpope/vim-jdaddy'                 " JSON text object stuff
 Plug 'tommcdo/vim-lion'                 " align code with gl<motion><letter>, like glip=
 Plug 'PProvost/vim-ps1'                 " Powershell support
-
 Plug 'kkoenig/wimproved.vim'            " Fixes gvim issues like window bar color
 Plug 'yegappan/mru'                     " Plugin for recently edited files
-
 Plug 'MarcWeber/vim-addon-mw-utils'     " Dependency for snipmate
 Plug 'tomtom/tlib_vim'                  " Dependency for snipmate
 Plug 'garbas/vim-snipmate'              " Snippets
-
 Plug 'honza/vim-snippets'
 Plug 'christianrondeau/vim-base64'
-
 Plug 'mhinz/vim-startify'               " Start page for vim
-Plug 'azzoam/FixGVimBorder'
-
-                                        " Use gr{motion} to replace with text in register. For a specific register, use "xgr{motion}
+"Plug 'azzoam/FixGVimBorder'
+" Use gr{motion} to replace with text in register. For a specific register, use "xgr{motion}
 Plug 'vim-scripts/ReplaceWithRegister' 
-
-Plug 'vim-utils/vim-space'              " Whitespace text object
+Plug 'vim-scripts/AdvancedSorters'
+"Plug 'zxqfl/tabnine-vim'                " AI-driven autocomplete
 
 call plug#end()
 
@@ -105,7 +107,8 @@ call plug#end()
 "colorscheme OceanicNext
 "colorscheme monokai
 "colorscheme moonfly
-colorscheme onedark
+"color ci_dark
+color badwolf
 
 filetype plugin indent on
 
@@ -117,7 +120,7 @@ au BufNewFile,BufRead *.aspx,*.ascx,*.master,*.cshtml set filetype=html
 au BufNewFile,BufRead *.js,*.jsx set fileformat=unix
 
 "Start in full screen
-"au GUIEnter * simalt ~x
+au GUIEnter * simalt ~x
 "au GUIEnter * silent! WToggleClean
 
 
@@ -146,11 +149,17 @@ let g:user_emmet_settings = {
 \  'javascript.jsx' : {
 \      'extends' : 'jsx',
 \  },
+\  'javascript' : {
+\      'extends' : 'jsx',
+\  },
 \}
 
 "_____________________________________________________
 "----------------------Mappings-----------------------
 "_____________________________________________________
+
+"Make Y yank until end of line
+map Y y$
 
 "Have 0 go to first nonblank character
 nmap 0 ^
@@ -175,8 +184,16 @@ nmap <S-Enter> O<Esc>
 nmap j gj
 nmap k gk
 
-"Make empty lines ACTUALLY empty (removes lines with just whitespace, and trailing whitespace)
-nmap <leader>dws ma:%s/^\s*$//g<CR>:%s/\s\+$//e<CR>`a
+" Left and right arrows move between buffers
+nmap <left> :bp<cr>
+nmap <right> :bn<cr>
+
+" For saving/reading git notes from a text file (avoid copy/paste weirdness into terminal)
+nmap <leader>sgn :w! /mnt/c/temp/gitnotes.txt<cr>
+nmap <leader>rgn :.-1read /mnt/c/temp/gitnotes.txt<cr>
+
+"Make empty lines ACTUALLY empty (removes lines with just whitespace)
+nmap <leader>dws :%s/^\s*$//g<CR>:noh<cr>``
 
 "Delete empty lines
 nmap <leader>dbl :g/^\s*$/d<cr>``
@@ -194,8 +211,8 @@ nmap <leader>tn :tabnew<CR>
 map <leader>rc :edit $MYVIMRC<CR>
 
 " Switch CWD to the directory of the open buffer
-nnoremap <silent> <leader>cd :cd %:p:h<CR>:NERDTreeCWD<CR>:NERDTreeClose<CR>
-nnoremap <silent> <leader>nf :NERDTreeFind<CR>
+"nnoremap <silent> <leader>cd :cd %:p:h<CR>:NERDTreeCWD<CR>:NERDTreeClose<CR>
+nnoremap <silent> <leader>cd :cd %:p:h<CR>
 
 "Open current file location in windows explorer
 map <leader>ex :silent !explorer.exe /select, "%:p"<cr>
@@ -293,11 +310,11 @@ xmap ia <Plug>SidewaysArgumentTextobjI
 nnoremap <F5> :UndotreeToggle<cr>
 
 "Markdown preview
-nmap <leader>md :%!c:\users\ianwi\.vim\Markdown.pl --html4tags <cr>
+nmap <leader>md :%!c:\users\ian.witherow\.vim\Markdown.pl --html4tags <cr>
 
 " Use tab and shift-tab to cycle through windows.
-"nnoremap <Tab> <C-W>w
-"nnoremap <S-Tab> <C-W>W
+nnoremap <Tab> <C-W>w
+nnoremap <S-Tab> <C-W>W
 "
 " Use | and _ to split windows (while preserving original behaviour of [count]bar and [count]_).
 nnoremap <expr><silent> <Bar> v:count == 0 ? "<C-W>v<C-W><Right>" : ":<C-U>normal! 0".v:count."<Bar><CR>"
@@ -315,6 +332,9 @@ let html_no_rendering=1
 "use jsx settings for .js files also
 let g:jsx_ext_required = 0
 
+" Enable rainbow parentheses
+let g:rainbow_active = 1
+
 " Syntastic
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
@@ -331,11 +351,7 @@ let g:jsx_ext_required = 0
 
 
 "Persist undo
-let undo_dir = $TEMP."\\vimundo"
-if !isdirectory(undo_dir)
-	silent execute "!mkdir ".undo_dir
-endif
-set undodir=$TEMP\vimundo "not sure how to use the variable I made here
+set undodir=~/.vim/vimundo
 set undofile
 set undolevels=100000
 
@@ -346,23 +362,29 @@ runtime macros/matchit.vim
 " start page config
 let g:startify_bookmarks = [
 		\ { 'c': '~/.vimrc' },
-		\ { 'r': '~/OneDrive - Source/Projects/Web/Source/Source.Web/apps/react' },
 		\ ]
+		"\ { 'r': '~/OneDrive - Source/Projects/Web/Source/Source.Web/apps/react' },
+		"\ { 'p': '~/OneDrive - Source/Projects/Web/Source/Source.Web/apps/react/Prospecting' },
 
 let g:startify_change_to_dir = 1
 let g:startify_disable_at_vimenter = 1
 
 
-"Ctrl-P stuff
+"Ctrl-P and FZF stuff
 "Ctrl+B opens CtrlP Buffer
-nnoremap <silent> <c-b> :CtrlPBuffer<CR>
-
+nnoremap <silent> <c-f> :Files %:p:h<CR>
+nnoremap <silent> <c-b> :Buffers<CR>
+" Files but for the current directory
+nnoremap <leader>f :Files<CR>
 "<leader>mru opens Startify
 nnoremap <silent> <leader>mru :Startify<CR>
 let g:ctrlp_working_path_mode = 'c'
+let $FZF_DEFAULT_COMMAND = 'ag --nocolor --ignore node_modules --ignore obj --ignore svgs --ignore bin --ignore packages --ignore bower_components --ignore Content --ignore Scripts -g ""'
 
 " cd into Source project directory
-"nnoremap <silent> <leader>src :cd c:\Users\ianwi\OneDrive - Source\Projects\Web\Source<CR>:NERDTreeCWD<CR>:NERDTreeClose<CR>:Startify<CR>
+"nnoremap <silent> <leader>src :cd c:\Users\ian.witherow\OneDrive - Source\Projects\Web\Source<CR>:NERDTreeCWD<CR>:NERDTreeClose<CR>:Startify<CR>
+"nnoremap <silent> <leader>src :cd c:\Users\ian.witherow\OneDrive - Source\Projects\Web\Source<CR>:Startify<CR>
+nnoremap <silent> <leader>src :Startify<CR>
 
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
@@ -381,7 +403,7 @@ set encoding=utf-8 " Necessary to show Unicode glyphs
 set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:Powerline_symbols = 'fancy'
-let g:airline_theme='solarized'
+let g:airline_theme='deus'
 
 "BetterDigraphs
 inoremap <expr>  <C-K>   BDG_GetDigraph()
@@ -390,24 +412,49 @@ inoremap <expr>  <C-K>   BDG_GetDigraph()
 inoremap <C-v> <c-r>*
 
 "NerdTree stuff
-map <F2> :NERDTreeToggle<CR>
+"map <F2> :NERDTreeToggle<CR>
+map <F2> :Explore<CR>
 "Make it so ? doesn't open help
-let NERDTreeMapHelp='<F7>'
+"let NERDTreeMapHelp='<F7>'
 
-set tags=tags;/
+" F2 for netrw toggle
+let g:NetrwIsOpen=0
+let g:netrw_winsize=25
+function! ToggleNetrw()
+    if g:NetrwIsOpen
+        let i = bufnr("$")
+        while (i >= 1)
+            if (getbufvar(i, "&filetype") == "netrw")
+                silent exe "bwipeout " . i 
+            endif
+            let i-=1
+        endwhile
+        let g:NetrwIsOpen=0
+    else
+        let g:NetrwIsOpen=1
+		  silent cd %:p:h
+        silent Lexplore
+    endif
+endfunction
+
+noremap <silent> <F2> :call ToggleNetrw()<CR>
+
 
 if !has("gui_running")
-    set term=xterm
+    set term=xterm-256color
     set t_Co=256
     let &t_AB="\e[48;5;%dm"
     let &t_AF="\e[38;5;%dm"
-    colorscheme kuroi
-else
-	set lines=50
-	set columns=150
+	 set background=dark
+	 set termguicolors
+	 let base16colorspace=256
+	 " workaround for weird background color issue
+	 set t_ut=""
+	 set ttyscroll=1
+	 color default
 endif
 
-call fixGVimBorder#auto()
+"call fixGVimBorder#auto()
 
 
 function! FixBrackets()

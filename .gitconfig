@@ -3,31 +3,33 @@
 	preloadindex = true
 	trustctime = false
 	editor = vim
-	autocrlf = false
-	whitespace = cr-at-eol
+	pager = "diff-so-fancy | less --tabs=4 -RFX"
+	autocrlf = input
+	whitespace = blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+	fileMode = false
 [push]
 	default = simple
 [color]
 	ui = true
 
 [user]
-	name = Ian Witherow
-	email = ianwitherow@gmail.com
+	#name = Name Here
+	#email = email@here.com
 [branch "master"]
 	remote = origin
 [alias]
 	co = checkout
 	br = branch
-	#st = status
+	st = status
 	sshow = "!f() { git stash show stash^{/$*} -p; }; f"
 	sapply = "!f() { git stash apply stash^{/$*}; }; f"
 	spop = "!f() { git stash pop stash^{/$*}; }; f"
 	spopfirst = stash pop stash@{0}
-	live = !git push && git co master && git merge --no-ff develop && git push && git co develop
 	d = diff -w
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 [merge]
 	ff = no
+	tool = vimdiff
 [gc]
 	auto = 256
 [filter "lfs"]
@@ -49,3 +51,8 @@
 	new = green bold
 	whitespace = red reverse
 
+[rerere]
+	enabled = true
+
+[oh-my-zsh]
+	hide-dirty = 1
