@@ -124,15 +124,14 @@ echo "Copying files and directories..."
 find ~/dotfiles -mindepth 1 -maxdepth 1 ! \( -name 'install.sh' -o -name '.git' -o -name 'dotfiles' \) -exec cp -r {} ~ \;
 echo "Copy complete."
 
-# Start zsh
+
+echo "Done!"
+
+# Tell user to run zsh if necessary
 if command -v zsh >/dev/null 2>&1; then
   # Zsh is installed
   if [[ "$SHELL" != *"zsh"* ]]; then
     # current shell is not Zsh
-    echo "Starting Zsh..."
-    zsh
+	 echo "Run \e[1;32mzsh\e[0m to switch to the new hotness."
   fi
 fi
-
-echo "Done!"
-
