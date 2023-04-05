@@ -6,18 +6,20 @@
 ###################################
 if [[ "$OSTYPE" == "darwin"* ]]; then
 	if [[ $(command -v brew) == "" ]]; then
-		 echo "Homebrew not found. Installing Homebrew..."
-		 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-		 (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> $HOME/.zprofile
-			 eval "$(/opt/homebrew/bin/brew shellenv)"
+		echo "Homebrew not found. Installing Homebrew..."
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> $HOME/.zprofile
+		eval "$(/opt/homebrew/bin/brew shellenv)"
 	else
-		 echo "Homebrew is already installed."
+		echo "Homebrew is installed."
 	fi
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
 	if [[ $(command -v brew) == "" ]]; then
-		echo "Failed to install Homebrew. Try running this script again as sudo (sudo !!)"
+		echo ""
+		echo ""
+		echo "\e[1;32mFailed to install Homebrew. Try running this script again as sudo (sudo !!)\e[0m"
 		exit 1
 	fi
 fi
@@ -28,27 +30,27 @@ fi
 ###################################
 # check if Git is already installed
 if ! command -v git &> /dev/null; then
-    # check if running on macOS
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "Git not found. Installing Git on macOS using Homebrew..."
-        brew install git
-    # check if running on Linux
-    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo "Git not found. Installing Git on Linux using apt-get..."
-        sudo apt-get install git
-    else
-        echo "Unsupported operating system."
-        exit 1
-    fi
+	# check if running on macOS
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		echo "Git not found. Installing Git on macOS using Homebrew..."
+		brew install git
+		# check if running on Linux
+	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		echo "Git not found. Installing Git on Linux using apt-get..."
+		sudo apt-get install git
+	else
+		echo "Unsupported operating system."
+		exit 1
+	fi
 else
-    echo "Git is already installed."
+	echo "Git is already installed."
 fi
 echo "Git installation complete."
 
 # clone dotfiles repository if it doesn't already exist
 if [ ! -d "$HOME/dotfiles" ]; then
-    echo "Cloning dotfiles repository..."
-    git clone https://github.com/ianwitherow/dotfiles ~/dotfiles
+	echo "Cloning dotfiles repository..."
+	git clone https://github.com/ianwitherow/dotfiles ~/dotfiles
 fi
 
 
@@ -58,23 +60,23 @@ zsh_installed=false
 ###################################
 # check if Zsh is already installed
 if ! command -v zsh &> /dev/null; then
-    # check if running on macOS
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "Zsh not found. Installing Zsh on macOS using Homebrew..."
-        brew install zsh
-		  zsh_installed=true
-    # check if running on Linux
-    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo "Zsh not found. Installing Zsh on Linux using apt-get..."
-        sudo apt-get install zsh
-		  zsh_installed=true
-    else
-        echo "Unsupported operating system."
-        exit 1
-    fi
+	# check if running on macOS
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		echo "Zsh not found. Installing Zsh on macOS using Homebrew..."
+		brew install zsh
+		zsh_installed=true
+		# check if running on Linux
+	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		echo "Zsh not found. Installing Zsh on Linux using apt-get..."
+		sudo apt-get install zsh
+		zsh_installed=true
+	else
+		echo "Unsupported operating system."
+		exit 1
+	fi
 else
-    echo "Zsh is already installed."
-	 zsh_installed=true
+	echo "Zsh is already installed."
+	zsh_installed=true
 fi
 echo "Zsh installation complete."
 
@@ -84,29 +86,31 @@ echo "Zsh installation complete."
 ###################################
 # check if Oh My Zsh is installed
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  # install Oh My Zsh
-  echo "Installing Oh My Zsh..."
-  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	# install Oh My Zsh
+	echo "Installing Oh My Zsh..."
+	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 else
-  # Oh My Zsh is already installed
-  echo "Oh My Zsh is already installed."
+	# Oh My Zsh is already installed
+	echo "Oh My Zsh is already installed."
 fi
 
+# zsh-syntax-highlighting plugin
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
 ###################################
 # Install Neovim
 ###################################
 # check if running on macOS
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  echo "Installing Neovim on macOS using Homebrew..."
-  brew install neovim
-# check if running on Linux
+	echo "Installing Neovim on macOS using Homebrew..."
+	brew install neovim
+	# check if running on Linux
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  echo "Installing Neovim on Linux using apt-get..."
-  sudo apt-get install neovim
+	echo "Installing Neovim on Linux using apt-get..."
+	sudo apt-get install neovim
 else
-  echo "Unsupported operating system."
-  exit 1
+	echo "Unsupported operating system."
+	exit 1
 fi
 echo "Neovim installation complete."
 
@@ -115,20 +119,10 @@ echo "Neovim installation complete."
 # Install NVM
 ###################################
 if command -v nvm &> /dev/null; then
-    echo "NVM is already installed."
+	echo "NVM is already installed."
 else
-    # check if running on macOS
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "NVM not found. Installing NVM on macOS..."
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-    # check if running on Linux
-    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo "NVM not found. Installing NVM on Linux..."
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-    else
-        echo "Unsupported operating system."
-        exit 1
-    fi
+	echo "NVM not found. Installing..."
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 fi
 
 # install latest stable version of Node.js and npm
@@ -148,13 +142,13 @@ find ~/dotfiles -mindepth 1 -maxdepth 1 ! \( -name 'install.sh' -o -name '.git' 
 echo "Copy complete."
 
 
-echo "Done!"
+echo "\e[1;32mDone!\e[0m"
 
 # Tell user to run zsh if necessary
 if command -v zsh >/dev/null 2>&1; then
-  # Zsh is installed
-  if [[ "$SHELL" != *"zsh"* ]]; then
-    # current shell is not Zsh
-	 echo "Run \e[1;32mzsh\e[0m to switch to the new hotness."
-  fi
+	# Zsh is installed
+	if [[ "$SHELL" != *"zsh"* ]]; then
+		# current shell is not Zsh
+		echo "Run \e[1;32mzsh\e[0m to switch to the new hotness."
+	fi
 fi

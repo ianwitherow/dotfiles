@@ -57,7 +57,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 #plugins=(git)
 plugins=(
 	vi-mode
-	zsh-z
+	z
 	zsh-syntax-highlighting
 )
 export FZF_BASE=~/.fzf
