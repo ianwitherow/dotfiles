@@ -22,7 +22,12 @@ else
 fi
 echo "Git installation complete."
 
-git clone https://github.com/ianwitherow/dotfiles
+# clone dotfiles repository if it doesn't already exist
+if [ ! -d "$HOME/dotfiles" ]; then
+    echo "Cloning dotfiles repository..."
+    git clone https://github.com/ianwitherow/dotfiles ~/dotfiles
+fi
+
 
 
 ###################################
@@ -114,14 +119,9 @@ npm install -g diff-so-fancy
 ###################################
 # Copy dotfiles
 ###################################
-echo "Copying dotfiles..."
-srcdir="$HOME/dotfiles"
-destdir="$HOME"
-
 # copy files and directories, excluding install.sh
 echo "Copying files and directories..."
-find "$srcdir" ! -name 'install.sh' -exec cp -r {} "$destdir" \;
-
+find ~/dotfiles ! -name 'install.sh' -exec cp -r {} ~ \;
 echo "Copy complete."
 
 echo "Done!"
