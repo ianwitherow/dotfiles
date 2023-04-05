@@ -1,5 +1,20 @@
 #!/bin/bash
 
+
+###################################
+# Install Homebrew if macos
+###################################
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	if [[ $(command -v brew) == "" ]]; then
+		 echo "Homebrew not found. Installing Homebrew..."
+		 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		 (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> $HOME/.zprofile
+			 eval "$(/opt/homebrew/bin/brew shellenv)"
+	else
+		 echo "Homebrew is already installed."
+	fi
+fi
+
 ###################################
 # Install Git
 ###################################
