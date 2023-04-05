@@ -121,7 +121,7 @@ npm install -g diff-so-fancy
 ###################################
 # copy files and directories, excluding install.sh
 echo "Copying files and directories..."
-find ~/dotfiles ! -name 'install.sh' -exec cp -r {} ~ \;
+find ~/dotfiles -mindepth 1 -maxdepth 1 ! \( -name 'install.sh' -o -name '.git' -o -name 'dotfiles' \) -exec cp -r {} ~ \;
 echo "Copy complete."
 
 echo "Done!"
