@@ -15,6 +15,14 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	fi
 fi
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	if [[ $(command -v brew) == "" ]]; then
+		echo "Failed to install Homebrew. Try running this script again as sudo (sudo !!)"
+		exit 1
+	fi
+fi
+
+
 ###################################
 # Install Git
 ###################################
