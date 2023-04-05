@@ -25,6 +25,25 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	fi
 fi
 
+###################################
+# Install curl
+###################################
+# check if running on macOS
+if ! command -v curl >/dev/null; then
+    # check if running on macOS
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "Installing curl on macOS using Homebrew..."
+        brew install curl
+
+    # check if running on Linux
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        echo "Installing curl on Linux using apt-get..."
+        sudo apt-get install curl
+
+    echo "curl installation complete."
+	fi
+fi
+
 
 ###################################
 # Install Git
