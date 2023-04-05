@@ -29,7 +29,7 @@ if [ ! -d "$HOME/dotfiles" ]; then
 fi
 
 
-
+zsh_installed=false
 ###################################
 # Install ZSH
 ###################################
@@ -39,16 +39,19 @@ if ! command -v zsh &> /dev/null; then
     if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Zsh not found. Installing Zsh on macOS using Homebrew..."
         brew install zsh
+		  zsh_installed=true
     # check if running on Linux
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         echo "Zsh not found. Installing Zsh on Linux using apt-get..."
         sudo apt-get install zsh
+		  zsh_installed=true
     else
         echo "Unsupported operating system."
         exit 1
     fi
 else
     echo "Zsh is already installed."
+	 zsh_installed=true
 fi
 echo "Zsh installation complete."
 
@@ -120,6 +123,24 @@ npm install -g diff-so-fancy
 echo "Copying files and directories..."
 find ~/dotfiles -mindepth 1 -maxdepth 1 ! \( -name 'install.sh' -o -name '.git' -o -name 'dotfiles' \) -exec cp -r {} ~ \;
 echo "Copy complete."
+
+# Start zsh
+if command -v zsh >/dev/null 2>&1; then
+  # Zsh is installed
+  if [[ "$SHELL" != *"zsh"* ]]; then
+    # Zsh is not the default shell
+    echo "Zsh is installed, but not the default shell. Changing shell to Zsh..."
+    chsh -s $(which zsh)
+    echo "Shell changed. Starting Zsh..."
+  else
+    # Zsh is already the default shell
+    echo "Zsh is already the default shell. Starting Zsh..."
+  fi
+  zsh
+else
+  # Zsh is not installed
+  echo "Zsh is not installed. Aborting."
+fi
 
 echo "Done!"
 
