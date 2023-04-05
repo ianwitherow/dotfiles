@@ -4,7 +4,7 @@
 export PATH=$PATH:~/scripts
 
 # Path to your oh-my-zsh installation.
-export ZSH=/home/ian/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -122,7 +122,6 @@ fpath+=('$PWD/functions')
 #prompt pure
 
 
-#source /home/ian/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.bashrc
 
 #source ~/async.zsh
@@ -143,4 +142,4 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-source /home/ian/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+

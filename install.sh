@@ -31,20 +31,18 @@ fi
 
 
 ###################################
-# Install ZSH and oh-my-zsh
+# Install ZSH
 ###################################
 # check if Zsh is already installed
 if ! command -v zsh &> /dev/null; then
     # check if running on macOS
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "Zsh not found. Installing Zsh and Oh My Zsh on macOS using Homebrew..."
+        echo "Zsh not found. Installing Zsh on macOS using Homebrew..."
         brew install zsh
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     # check if running on Linux
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo "Zsh not found. Installing Zsh and Oh My Zsh on Linux using apt-get..."
+        echo "Zsh not found. Installing Zsh on Linux using apt-get..."
         sudo apt-get install zsh
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     else
         echo "Unsupported operating system."
         exit 1
@@ -56,17 +54,16 @@ echo "Zsh installation complete."
 
 
 ###################################
-# Install zsh-syntax-highlighting
+# Install oh-my-zsh
 ###################################
-# set the destination directory to the user's home directory
-DEST_DIR="$HOME/zsh-syntax-highlighting"
-# check if the repository is already cloned
-if [ -d "$DEST_DIR" ]; then
-    echo "zsh-syntax-highlighting is already present"
+# check if Oh My Zsh is installed
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  # install Oh My Zsh
+  echo "Installing Oh My Zsh..."
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 else
-    # clone the repository
-    echo "Cloning zsh-syntax-highlighting from GitHub..."
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$DEST_DIR"
+  # Oh My Zsh is already installed
+  echo "Oh My Zsh is already installed."
 fi
 
 

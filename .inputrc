@@ -2,21 +2,5 @@
 "\e[B": history-search-forward             # arrow down
 set completion-ignore-case on
 
-
-
-set completion-ignore-case On 
 #TAB: menu-complete 
 Tab: complete 
-#set editing-mode vi 
- 
-# operate-and-get-next allows you to navigagte to history 
-# and then keep executing commands successively from 
-# that point onwards 
-# NOTE: for this to work you must also add 'stty discard undef' to 
-# your .profile 
-#set keymap vi-insert 
-#"\C-o": operate-and-get-next 
- 
-#set keymap vi-command 
-#"\C-o": operate-and-get-next 
- 
