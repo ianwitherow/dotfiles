@@ -30,17 +30,17 @@ fi
 ###################################
 # check if running on macOS
 if ! command -v curl >/dev/null; then
-    # check if running on macOS
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "Installing curl on macOS using Homebrew..."
-        brew install curl
+	# check if running on macOS
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		echo "Installing curl on macOS using Homebrew..."
+		brew install curl
 
-    # check if running on Linux
-    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo "Installing curl on Linux using apt-get..."
-        sudo apt-get install curl
+		# check if running on Linux
+	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		echo "Installing curl on Linux using apt-get..."
+		sudo apt-get install curl
 
-    echo "curl installation complete."
+		echo "curl installation complete."
 	fi
 fi
 
@@ -120,17 +120,17 @@ fi
 ###################################
 # check if running on macOS
 if ! command -v nvim >/dev/null; then
-    # check if running on macOS
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "Installing Neovim on macOS using Homebrew..."
-        brew install neovim
+	# check if running on macOS
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		echo "Installing Neovim on macOS using Homebrew..."
+		brew install neovim
 
-    # check if running on Linux
-    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo "Installing Neovim on Linux using apt-get..."
-        sudo apt-get install neovim
+		# check if running on Linux
+	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		echo "Installing Neovim on Linux using apt-get..."
+		sudo apt-get install neovim
 
-    echo "Neovim installation complete."
+		echo "Neovim installation complete."
 	fi
 fi
 
