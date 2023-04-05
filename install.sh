@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo ""
 
 ###################################
 # Install Homebrew if macos
@@ -19,7 +20,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	if [[ $(command -v brew) == "" ]]; then
 		echo ""
 		echo ""
-		echo "\e[1;31mFailed to install Homebrew. Try running this script again as sudo (sudo \!\!)\e[0m"
+		echo "$(printf '\033[1;31m')Failed to install Homebrew. Try running this script again as sudo (sudo \!\!).$(printf '\033[0m')"
 		exit 1
 	fi
 fi
@@ -34,18 +35,16 @@ if ! command -v git &> /dev/null; then
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 		echo "Git not found. Installing Git on macOS using Homebrew..."
 		brew install git
+		echo "Git installation complete."
 		# check if running on Linux
 	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 		echo "Git not found. Installing Git on Linux using apt-get..."
 		sudo apt-get install git
-	else
-		echo "Unsupported operating system."
-		exit 1
+		echo "Git installation complete."
 	fi
 else
 	echo "Git is already installed."
 fi
-echo "Git installation complete."
 
 # clone dotfiles repository if it doesn't already exist
 if [ ! -d "$HOME/dotfiles" ]; then
@@ -70,9 +69,6 @@ if ! command -v zsh &> /dev/null; then
 		echo "Zsh not found. Installing Zsh on Linux using apt-get..."
 		sudo apt-get install zsh
 		zsh_installed=true
-	else
-		echo "Unsupported operating system."
-		exit 1
 	fi
 else
 	echo "Zsh is already installed."
@@ -95,43 +91,49 @@ else
 fi
 
 # zsh-syntax-highlighting plugin
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+omzsh_dir=$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+if [ ! -d "$omzsh_dir" ]; then
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $omzsh_dir
+fi
 
 ###################################
 # Install Neovim
 ###################################
 # check if running on macOS
-if [[ "$OSTYPE" == "darwin"* ]]; then
-	echo "Installing Neovim on macOS using Homebrew..."
-	brew install neovim
-	# check if running on Linux
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-	echo "Installing Neovim on Linux using apt-get..."
-	sudo apt-get install neovim
-else
-	echo "Unsupported operating system."
-	exit 1
+if ! command -v nvim >/dev/null; then
+    # check if running on macOS
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "Installing Neovim on macOS using Homebrew..."
+        brew install neovim
+
+    # check if running on Linux
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        echo "Installing Neovim on Linux using apt-get..."
+        sudo apt-get install neovim
+
+    echo "Neovim installation complete."
+	fi
 fi
-echo "Neovim installation complete."
 
 
 ###################################
 # Install NVM
 ###################################
-if command -v nvm &> /dev/null; then
+if [ -d "$HOME/.nvm" ]; then
 	echo "NVM is already installed."
 else
 	echo "NVM not found. Installing..."
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+	# install latest stable version of Node.js and npm
+	nvm install node
+	echo "Node.js and npm installation complete."
 fi
 
-# install latest stable version of Node.js and npm
-nvm install node
 
-echo "Node.js and npm installation complete."
-
-echo "Installing diff-so-fancy..."
-npm install -g diff-so-fancy
+if ! command -v diff-so-fancy >/dev/null; then
+	echo "Installing diff-so-fancy..."
+	npm install -g diff-so-fancy
+fi
 
 ###################################
 # Copy dotfiles
@@ -141,14 +143,23 @@ echo "Copying files and directories..."
 find ~/dotfiles -mindepth 1 -maxdepth 1 ! \( -name 'install.sh' -o -name '.git' -o -name 'dotfiles' \) -exec cp -r {} ~ \;
 echo "Copy complete."
 
-
-echo "\e[1;32mDone\!\e[0m"
+# Print a fun "Done!" message
+echo ""
+echo "$(printf '\033[0;34m')╔═════════════════════════╗$(printf '\033[0m')"
+echo "$(printf '\033[0;34m')║                         ║$(printf '\033[0m')"
+echo "$(printf '\033[0;34m')║  $(printf '\033[1;33m')* * * * * * * * * * *$(printf '\033[0m')$(printf '\033[0;34m')  ║$(printf '\033[0m')"
+echo "$(printf '\033[0;34m')║  $(printf '\033[1;33m')* $(printf '\033[1;32m')      Done!       $(printf '\033[1;33m')* $(printf '\033[0m')$(printf '\033[0;34m') ║$(printf '\033[0m')"
+echo "$(printf '\033[0;34m')║  $(printf '\033[1;33m')* * * * * * * * * * *$(printf '\033[0m')$(printf '\033[0;34m')  ║$(printf '\033[0m')"
+echo "$(printf '\033[0;34m')║                         ║$(printf '\033[0m')"
+echo "$(printf '\033[0;34m')╚═════════════════════════╝$(printf '\033[0m')"
+echo ""
 
 # Tell user to run zsh if necessary
 if command -v zsh >/dev/null 2>&1; then
 	# Zsh is installed
 	if [[ "$SHELL" != *"zsh"* ]]; then
 		# current shell is not Zsh
-		echo "Run \e[1;32mzsh\e[0m to switch to the new hotness."
+		echo ""
+		echo "Run $(printf '\033[1;32m')zsh$(printf '\033[0m') to switch to the new hotness."
 	fi
 fi
