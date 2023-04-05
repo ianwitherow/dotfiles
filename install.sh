@@ -128,18 +128,10 @@ echo "Copy complete."
 if command -v zsh >/dev/null 2>&1; then
   # Zsh is installed
   if [[ "$SHELL" != *"zsh"* ]]; then
-    # Zsh is not the default shell
-    echo "Zsh is installed, but not the default shell. Changing shell to Zsh..."
-    chsh -s $(which zsh)
-    echo "Shell changed. Starting Zsh..."
-  else
-    # Zsh is already the default shell
-    echo "Zsh is already the default shell. Starting Zsh..."
+    # current shell is not Zsh
+    echo "Starting Zsh..."
+    zsh
   fi
-  zsh
-else
-  # Zsh is not installed
-  echo "Zsh is not installed. Aborting."
 fi
 
 echo "Done!"
