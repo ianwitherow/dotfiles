@@ -94,5 +94,20 @@ vim.cmd [[
 ]]
 
 
--- 0.06 cursor animation length
--- 0.7  trail size
+-- Changes font to Hack on plaintext files since it doesn't have ligatures.
+-- Also disabled autocomplete on plaintext files since it's annoying when I'm just writing notes or todo lists.
+local default_font = 'Monaco for Powerline:h13'
+-- Define the font for plain text and specific filetypes
+local filetype_fonts = {
+  text = 'Hack NF:h13'
+}
+-- Set up the autocommands to change the font and cmp buffer option based on FileType
+vim.cmd('autocmd FileType * let &guifont = "' .. default_font .. '"')
+vim.cmd('autocmd FileType * lua if vim.bo.filetype ~= "" and vim.bo.filetype ~= "text" then require("cmp").setup.buffer { enabled = true } else require("cmp").setup.buffer { enabled = false } end')
+
+for ft, font in pairs(filetype_fonts) do
+  vim.cmd('autocmd FileType ' .. ft .. ' let &guifont = "' .. font .. '"')
+end
+
+-- Set up an additional autocommand for BufEnter to set font and cmp options for new buffers
+vim.cmd('autocmd BufEnter * lua if vim.bo.filetype == "" or vim.bo.filetype == "text" then vim.o.guifont="' .. filetype_fonts.text .. '" vim.cmd("lua require(\'cmp\').setup.buffer { enabled = false }") else vim.o.guifont="' .. default_font .. '" vim.cmd("lua require(\'cmp\').setup.buffer { enabled = true }") end')
