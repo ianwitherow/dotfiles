@@ -35,6 +35,7 @@ fi
 # Install curl
 ###################################
 # check if running on macOS
+curl_installed=false
 if ! command -v curl >/dev/null; then
 	# check if running on macOS
 	if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -48,6 +49,10 @@ if ! command -v curl >/dev/null; then
 
 		echo "curl installation complete."
 	fi
+fi
+
+if command -v curl &> /dev/null; then
+	curl_installed=true
 fi
 
 
@@ -109,7 +114,11 @@ echo "Zsh installation complete."
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
 	# install Oh My Zsh
 	echo "Installing Oh My Zsh..."
-	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	if [ "$curl_installed" = true ]; then
+		sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	else
+		sh -c "$(wget -qO- https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	fi
 else
 	# Oh My Zsh is already installed
 	echo "Oh My Zsh is already installed."
@@ -148,7 +157,11 @@ if [ -d "$HOME/.nvm" ]; then
 	echo "NVM is already installed."
 else
 	echo "NVM not found. Installing..."
-	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+	if [ "$curl_installed" = true ]; then
+		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+	else
+		wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+	fi
 
 	export NVM_DIR="$HOME/.nvm"
 	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
