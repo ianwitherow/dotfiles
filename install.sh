@@ -25,6 +25,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	fi
 fi
 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+	echo "Updating apt..."
+	sudo apt-get update
+fi
+
+
 ###################################
 # Install curl
 ###################################
