@@ -5,4 +5,4 @@
 
 or
 
-    sudo wget -O - https://raw.githubusercontent.com/ianwitherow/dotfiles/master/install.sh | bash
+    sudo wget -q -O - https://raw.githubusercontent.com/ianwitherow/dotfiles/master/install.sh | bash
