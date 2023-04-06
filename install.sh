@@ -26,10 +26,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 ###################################
-# Update apt repositories
+# Add and Update apt repositories
 ###################################
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	echo "Updating apt..."
+	sudo apt-get install -y software-properties-common
+	sudo add-apt-repository -y ppa:neovim-ppa/unstable # Need this for neovim. Stable did not work, but unstable did
 	sudo apt-get update
 fi
 
