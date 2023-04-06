@@ -25,6 +25,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	fi
 fi
 
+###################################
+# Update apt repositories
+###################################
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	echo "Updating apt..."
 	sudo apt-get update
@@ -34,7 +37,6 @@ fi
 ###################################
 # Install curl
 ###################################
-# check if running on macOS
 curl_installed=false
 if ! command -v curl >/dev/null; then
 	# check if running on macOS
@@ -59,7 +61,6 @@ fi
 ###################################
 # Install Git
 ###################################
-# check if Git is already installed
 if ! command -v git &> /dev/null; then
 	# check if running on macOS
 	if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -87,7 +88,6 @@ zsh_installed=false
 ###################################
 # Install ZSH
 ###################################
-# check if Zsh is already installed
 if ! command -v zsh &> /dev/null; then
 	# check if running on macOS
 	if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -110,7 +110,6 @@ echo "Zsh installation complete."
 ###################################
 # Install oh-my-zsh
 ###################################
-# check if Oh My Zsh is installed
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
 	# install Oh My Zsh
 	echo "Installing Oh My Zsh..."
@@ -133,7 +132,6 @@ fi
 ###################################
 # Install Neovim
 ###################################
-# check if running on macOS
 if ! command -v nvim >/dev/null; then
 	# check if running on macOS
 	if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -181,12 +179,15 @@ fi
 ###################################
 # Copy dotfiles
 ###################################
-# copy files and directories, excluding install.sh
 echo "Copying files and directories..."
+# copy files and directories.
+# Exclude install.sh, .git, and dotfiles dir
 find ~/dotfiles -mindepth 1 -maxdepth 1 ! \( -name 'install.sh' -o -name '.git' -o -name 'dotfiles' \) -exec cp -r {} ~ \;
 echo "Copy complete."
 
-# Print a fun "Done!" message
+###################################
+# Done!
+###################################
 echo ""
 echo "$(printf '\033[0;34m')╔═════════════════════════╗$(printf '\033[0m')"
 echo "$(printf '\033[0;34m')║                         ║$(printf '\033[0m')"
