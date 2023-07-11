@@ -11,4 +11,3 @@ vim.fn['camelcasemotion#CreateMotionMappings']('<leader>')
 
 vim.lsp.set_log_level("debug")
 
-vim.api.nvim_set_keymap ("n", "<space>", "zz", { noremap = true, silent = true }) -- Space centers the screen around the current line
