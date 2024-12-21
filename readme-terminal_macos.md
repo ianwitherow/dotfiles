@@ -10,6 +10,7 @@
 ```bash
 brew install stow
 brew install git
+brew install diff-so-fancy
 brew install node
 brew install tmux
 brew install neovim
